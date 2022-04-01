@@ -1,20 +1,41 @@
-//TODO make it an array
-
 //Function to add background
-function addBackground(newImgName, fileSource, positionLeft, PositionBottom){
-    let screenWidth = window.innerWidth;
-    let screenHeight = window.innerHeight;
-    let horizonDistance = 5;
-    for (let j = 0; j < horizonDistance; j++){
-        for (let i = 0; i < screenWidth; i+=100){
-            newImage(newImgName, fileSource, `${i}px`, `${j*100}px`)
+function addBackground(backgroundImgName, fileSource, backgroundStartBottom, backgroundEndTop){
+    //Each block of background image is 100x100px
+    let imageWidth = 100
+    //Iterate row
+    for (let currentRow = backgroundStartBottom; currentRow < backgroundEndTop; currentRow++){
+        //Iterate Column
+        for (let currentColumn = 0; currentColumn < window.innerWidth; currentColumn += imageWidth){
+            //Add Background
+            newImage(backgroundImgName, fileSource, `${currentColumn}px`, `${currentRow*imageWidth}px`)
         }
     }
 }
 
-//Add Background
-let grass
-addBackground(grass, 'assets/grass.png', '0px', '0px')
+//TODO MAYBE? Add biome randomiser, auto calculate layers
+//TODO MAYBE? Add sky layers, auto calculate layers
+
+//Set position where ground and sky meet, Default 5 (x100px)
+let horizonPosition = 5
+//list of backgrounds
+let backgroundsList = [
+    {
+        imageName: 'grass',
+        assetLocation: 'assets/grass.png',
+        startPositionX: 0,
+        endPositionX: horizonPosition
+    },
+    {
+        imageName: 'sky',
+        assetLocation: 'assets/sky.png',
+        startPositionX: horizonPosition,
+        endPositionX: window.innerHeight
+    }
+]
+//Add Backgrounds
+for (let currentImage = 0; currentImage < backgroundsList.length; currentImage++){
+    addBackground(window[backgroundsList[currentImage].imageName], backgroundsList[currentImage].assetLocation, backgroundsList[currentImage].startPositionX, backgroundsList[currentImage].endPositionX)
+}
 
 // Function to add image to page
 function newImage(newImgName, fileSource, positionLeft, PositionBottom){
@@ -27,21 +48,52 @@ function newImage(newImgName, fileSource, positionLeft, PositionBottom){
     return newImgName
 }
 
-// Add images to page
-let greenCharacter
-newImage(greenCharacter, 'assets/green-character.gif', '100px', '100px')
-let pineTree
-newImage(pineTree, 'assets/pine-tree.png', '450px', '200px')
-let tree
-newImage(tree, 'assets/tree.png', '200px', '300px')
-let pillar
-newImage(pillar, 'assets/pillar.png', '350px', '100px')
-let crate
-newImage(crate, 'assets/crate.png', '150px', '200px')
-let well
-newImage(well, 'assets/well.png', '500px', '425px')
+// List of Images on map
+let imagesList = [
+    {
+        imageName: 'greenCharacter',
+        assetLocation: 'assets/green-character.gif',
+        positionY: '100px',
+        PositionX: '100px'
+    },
+    {
+        imageName: 'pineTree',
+        assetLocation: 'assets/pine-tree.png',
+        positionY: '450px',
+        PositionX: '200px'
+    },
+    {
+        imageName: 'tree',
+        assetLocation: 'assets/tree.png',
+        positionY: '200px',
+        PositionX: '300px'
+    },
+    {
+        imageName: 'pillar',
+        assetLocation: 'assets/pillar.png',
+        positionY: '350px',
+        PositionX: '100px'
+    },
+    {
+        imageName: 'crate',
+        assetLocation: 'assets/crate.png',
+        positionY: '150px',
+        PositionX: '200px'
+    },
+    {
+        imageName: 'well',
+        assetLocation: 'assets/well.png',
+        positionY: '500px',
+        PositionX: '425px'
+    }
+]
 
-// Function to add item images to page, dissapears on click
+//Add Images to map
+for (let currentImage = 0; currentImage < imagesList.length; currentImage++){
+    newImage(window[imagesList[currentImage].imageName], imagesList[currentImage].assetLocation, imagesList[currentImage].positionY, imagesList[currentImage].PositionX)
+}
+
+// Function to add item images to page, dissapears on double click
 function newItem(newItemName, fileSource, positionLeft, PositionBottom) {
     newItemName = newImage(newItemName, fileSource, positionLeft, PositionBottom)
     newItemName.addEventListener('dblclick', function(){
@@ -49,11 +101,29 @@ function newItem(newItemName, fileSource, positionLeft, PositionBottom) {
     })
 }
 
-//Add item images
-let sword
-newItem(sword, 'assets/sword.png', '500px', '405px')
-let sheild
-newItem(sheild, 'assets/sheild.png', '165px', '185px')
-let staff
-newItem(staff, 'assets/staff.png', '600px', '100px')
+// List of Images on map
+let itemsList = [
+    {
+        imageName: 'sword',
+        assetLocation: 'assets/sword.png',
+        positionY: '500px',
+        PositionX: '405px'
+    },
+    {
+        imageName: 'sheild',
+        assetLocation: 'assets/sheild.png',
+        positionY: '165px',
+        PositionX: '185px'
+    },
+    {
+        imageName: 'staff',
+        assetLocation: 'assets/staff.png',
+        positionY: '600px',
+        PositionX: '100px'
+    }
+]
+//Add Images to map
+for (let currentImage = 0; currentImage < itemsList.length; currentImage++){
+    newItem(window[itemsList[currentImage].itemsName], itemsList[currentImage].assetLocation, itemsList[currentImage].positionY, itemsList[currentImage].PositionX)
+}
 
